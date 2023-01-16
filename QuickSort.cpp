@@ -1,17 +1,14 @@
+
 #include<iostream>
 using namespace std;
-int main()
+int partition(int a[],int lb,int ub)
 {
-	int a[]={7, 6, 10, 5, 9, 2, 1, 15, 7 };
-	int lb=0;
-	int ub=8;
 	int pivot=a[lb];
 	int start=lb;
 	int end=ub;
-	int j=1;
 	while(start<end)
 	{
-		while(pivot>=a[start])
+		if(pivot>=a[start])
 		{
 			start++;
 		}
@@ -23,16 +20,32 @@ int main()
 		{
 			int temp=a[start];
 			a[start]=a[end];
-			a[end]=temp;
-		}	
-//		cout<<"Start "<<start<<" End "<<end<<endl;
+			a[end]=temp;	
+		}
 	}
-	int temp=a[end];
-	a[end]=pivot;
-	a[0]=temp;
-	for(int i=0;i<9;i++)
+	int temp=a[lb];
+	a[lb]=a[end];
+	a[end]=temp;
+	return end;
+}
+quicksort(int a[],int lb,int ub)
+{
+	if(lb<ub)
 	{
-		cout<<a[i]<<" ";
+		int loc=partition(a,lb,ub);
+		quicksort(a,lb,loc-1);
+		quicksort(a,loc+1,ub);	
 	}
-	cout<<"Start "<<start<<" End "<<end<<endl;
+}
+int main()
+{
+	int a[]={100,7,5,2,1,7,9,10,1,1,11,6,10,5,9,2,1,15,7};
+	int length=sizeof(a)/sizeof(a[0]);
+	int lb=0;
+	int ub=length-1;
+	quicksort(a,lb,ub);
+	for(int i=0;i<length;i++)
+	{
+		cout<<a[i]<<"  ";
+	}
 }
